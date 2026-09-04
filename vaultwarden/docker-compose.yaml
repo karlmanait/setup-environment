@@ -1,28 +1,25 @@
 ---
-version: "3.5"
 services:
   bitwarden:
     image: vaultwarden/server:alpine
     container_name: vaultwarden
     restart: always
     environment:
+      DOMAIN: ${DOMAIN}
       WEBSOCKER_ENABLED: "true"
     volumes:
-      - /home/karl/.vw-data:/data
+      - ${DATA_DIR}:/data
   caddy:
-    image: caddy:2
+    image: caddy:2.11.4
     container_name: caddy
     restart: always
     ports:
       - 80:80
       - 443:443
     volumes:
-      - ./caddy:/usr/bin/caddy
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile
       - ./caddy-config:/config
       - ./caddy-data:/data
     environment:
-      DOMAIN: "https://<my-subdomain>.duckdns.org"
-      EMAIL: "my-email@example.com"
-      DUCKDNS_TOKEN: "my-token"
+      DOMAIN: ${DOMAIN}
       LOG_FILE: "/data/access.log"

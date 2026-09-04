@@ -17,3 +17,6 @@ helm/demo/mysql/**/*
 
 # Cloned repositories
 prometheus/kube-prometheus/**/*
+
+# Environment variables
+**/.env
